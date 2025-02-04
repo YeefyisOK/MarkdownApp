@@ -28,6 +28,6 @@ We may update this Privacy Policy from time to time. We will notify you of any c
 
 ## Contact
 If you have questions about this Privacy Policy, please contact us at:
-Email: wangyi@example.com
+Email: wyf_5590@163.com
 
 Last modified: Feb 04, 2025
