@@ -1,4 +1,24 @@
 {
   "name": "MarkdownApp",
-  "displayName": "MarkdownApp"
+  "displayName": "码当笔记",
+  "icon": "./assets/icon.png",
+  "ios": {
+    "icon": "./assets/ios/icon.png",
+    "supportsTablet": true,
+    "bundleIdentifier": "com.tech.madangnotes",
+    "buildNumber": "1",
+    "icons": {
+      "ipad": {
+        "app": {
+          "normal": "./assets/ios/ipad/app.png",
+          "retina": "./assets/ios/ipad/app@2x.png",
+          "pro": "./assets/ios/ipad/app-pro.png"
+        },
+        "spotlight": {
+          "normal": "./assets/ios/ipad/spotlight.png",
+          "retina": "./assets/ios/ipad/spotlight@2x.png"
+        }
+      }
+    }
+  }
 }

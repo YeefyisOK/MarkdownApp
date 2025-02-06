@@ -1,3 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MarkdownApp</string>
+    <string name="app_name">码当笔记</string>
+    <string name="save">Save</string>
+    <string name="preview">Preview</string>
+    <string name="share">Share</string>
+    <string name="cancel">Cancel</string>
+    <string name="success">Success</string>
+    <string name="error">Error</string>
+    <string name="save_to_gallery">Save to Gallery</string>
+    <string name="share_options">Share Options</string>
+    <string name="please_select">Please Select</string>
+    <string name="generating_image">Generating image...</string>
+    <string name="save_success">Image saved successfully</string>
+    <string name="save_failed">Failed to save image</string>
+    <string name="input_placeholder">Enter Markdown content here...</string>
 </resources>

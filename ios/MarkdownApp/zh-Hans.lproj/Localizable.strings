@@ -1,0 +1,13 @@
+"Save" = "保存";
+"Preview" = "预览";
+"Share" = "分享";
+"Cancel" = "取消";
+"Success" = "成功";
+"Error" = "错误";
+"Save to Gallery" = "保存到相册";
+"Share Options" = "分享选项";
+"Please select" = "请选择操作";
+"Generating image..." = "正在生成图片，请稍候...";
+"Image saved successfully" = "图片已保存到相册";
+"Failed to save image" = "保存到相册失败";
+"Enter Markdown content here..." = "在此输入 Markdown 内容..."; 
