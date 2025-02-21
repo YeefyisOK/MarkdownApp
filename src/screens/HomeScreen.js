@@ -7,6 +7,9 @@ import {
   Text,
   Alert,
   Animated,
+  Platform,
+  Dimensions,
+  KeyboardAvoidingView,
 } from 'react-native';
 import RNFS from 'react-native-fs';
 import { FAB, IconButton, Button, List, Searchbar, Chip } from 'react-native-paper';
@@ -19,6 +22,9 @@ const HomeScreen = ({ navigation }) => {
   const [filteredFiles, setFilteredFiles] = useState([]);
   const [searchMode, setSearchMode] = useState('filename'); // 'filename' or 'content'
   const [isSearching, setIsSearching] = useState(false);
+
+  // 添加设备类型检测
+  const isIpad = Platform.OS === 'ios' && Platform.isPad;
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -235,8 +241,12 @@ const HomeScreen = ({ navigation }) => {
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.searchContainer}>
+    <KeyboardAvoidingView 
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 88 : 0}
+    >
+      <View style={[styles.searchContainer, { zIndex: 1 }]}>
         <Searchbar
           placeholder={searchMode === 'filename' ? "搜索文件名..." : "搜索文件内容..."}
           onChangeText={setSearchQuery}
@@ -284,32 +294,45 @@ const HomeScreen = ({ navigation }) => {
           </Chip>
         </View>
       </View>
-      {files.length === 0 ? (
-        <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>暂无 Markdown 文件</Text>
-          <Text style={styles.emptySubText}>点击右下角按钮创建新文件</Text>
-        </View>
-      ) : (
-        <FlatList
-          data={filteredFiles}
-          keyExtractor={item => item.name}
-          ListEmptyComponent={() => (
-            <View style={styles.emptyContainer}>
-              <List.Item
-                title={isSearching ? "正在搜索..." : "没有找到匹配的文件"}
-                left={props => <List.Icon {...props} icon={isSearching ? "magnify" : "file-search"} />}
-              />
-            </View>
-          )}
-          renderItem={renderItem}
+      <View style={{ flex: 1, position: 'relative' }}>
+        {files.length === 0 ? (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>暂无 Markdown 文件</Text>
+            <Text style={styles.emptySubText}>点击右下角按钮创建新文件</Text>
+          </View>
+        ) : (
+          <FlatList
+            data={filteredFiles}
+            keyExtractor={item => item.name}
+            ListEmptyComponent={() => (
+              <View style={styles.emptyContainer}>
+                <List.Item
+                  title={isSearching ? "正在搜索..." : "没有找到匹配的文件"}
+                  left={props => <List.Icon {...props} icon={isSearching ? "magnify" : "file-search"} />}
+                />
+              </View>
+            )}
+            renderItem={renderItem}
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="on-drag"
+          />
+        )}
+        <FAB
+          style={[
+            styles.fab,
+            {
+              bottom: Platform.OS === 'ios' 
+                ? (isIpad 
+                    ? (Dimensions.get('window').height > 1024 ? 24 : 20)
+                    : 30)
+                : 16
+            }
+          ]}
+          icon={() => <Icon name="plus" size={24} color="white" />}
+          onPress={createNewFile}
         />
-      )}
-      <FAB
-        style={styles.fab}
-        icon={() => <Icon name="plus" size={24} color="white" />}
-        onPress={createNewFile}
-      />
-    </View>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -334,8 +357,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     margin: 16,
     right: 0,
-    bottom: 0,
     backgroundColor: '#2196F3',
+    zIndex: 2,
+    elevation: 6,
   },
   emptyContainer: {
     flex: 1,

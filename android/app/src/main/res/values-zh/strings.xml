@@ -7,4 +7,16 @@
     <string name="cancel">取消</string>
     <string name="success">成功</string>
     <string name="error">错误</string>
+    <string name="save_to_gallery">保存到相册</string>
+    <string name="share_options">分享选项</string>
+    <string name="please_select">请选择操作</string>
+    <string name="generating_image">正在生成图片...</string>
+    <string name="image_saved">图片已保存到相册</string>
+    <string name="save_failed">保存失败</string>
+    <string name="enter_markdown">在此输入 Markdown 内容...</string>
+    <string name="edit_document">编辑文档</string>
+    <string name="back">返回</string>
+    <string name="permission_required">需要权限</string>
+    <string name="permission_message">请在设置中允许访问相册</string>
+    <string name="go_to_settings">去设置</string>
 </resources> 

@@ -56,9 +56,6 @@ const EditorScreen = ({ route, navigation }) => {
     } else {
       setIsEditing(true); // 新建文件时直接进入编辑模式
     }
-    
-    // 预先检查相册权限
-    checkPhotoLibraryPermission();
   }, []);
 
   const loadContent = async () => {
@@ -68,7 +65,7 @@ const EditorScreen = ({ route, navigation }) => {
       setContent(fileContent);
     } catch (error) {
       console.error('Error loading file:', error);
-      Alert.alert('错误', '加载文件内容失败');
+      Alert.alert('Error', 'Failed to load file content');
     }
   };
 
@@ -79,7 +76,7 @@ const EditorScreen = ({ route, navigation }) => {
       return true;  // 返回保存成功标志
     } catch (error) {
       console.error('Error saving file:', error);
-      Alert.alert('错误', '保存文件失败');
+      Alert.alert('Error', 'Failed to save file');
       return false;  // 返回保存失败标志
     }
   };
@@ -95,15 +92,15 @@ const EditorScreen = ({ route, navigation }) => {
         } catch (error) {
           if (error.code === 'E_PHOTO_LIBRARY_AUTH_DENIED') {
             Alert.alert(
-              '需要相册权限',
-              '请在设置中允许访问相册',
+              'Permission Required',
+              'Please allow access to photo library in Settings',
               [
                 {
-                  text: '去设置',
+                  text: 'Go to Settings',
                   onPress: () => Linking.openSettings()
                 },
                 {
-                  text: '取消',
+                  text: 'Cancel',
                   style: 'cancel'
                 }
               ]
@@ -129,6 +126,7 @@ const EditorScreen = ({ route, navigation }) => {
       const hasPermission = await checkPhotoLibraryPermission();
       if (!hasPermission) {
         throw new Error('没有相册访问权限，请在设置中允许访问相册');
+        setIsLoading(false);  // 确保加载状态被重置
       }
       
       console.log('[SaveToGallery] 开始保存图片');
@@ -151,7 +149,7 @@ const EditorScreen = ({ route, navigation }) => {
       await CameraRoll.save(`file://${tempPath}`, { type: 'photo' });
       console.log('[SaveToGallery] CameraRoll.save 成功');
       
-      Alert.alert('成功', '图片已保存到相册');
+      Alert.alert('成功', '图片已保存到图库');
       
       // 清理临时文件
       try {
@@ -166,7 +164,7 @@ const EditorScreen = ({ route, navigation }) => {
         code: error.code,
         stack: error.stack
       });
-      Alert.alert('错误', '保存到相册失败: ' + error.message);
+      Alert.alert('Error', 'Failed to save to photo library: ' + error.message);
     } finally {
       setIsLoading(false);
     }
@@ -180,7 +178,7 @@ const EditorScreen = ({ route, navigation }) => {
       // 检查 viewShotRef 是否可用
       if (!viewShotRef.current) {
         console.error('viewShotRef is not available');
-        Alert.alert('错误', 'ViewShot 组件未准备好');
+        Alert.alert('Error', 'ViewShot 组件未准备好');
         setIsLoading(false);
         return;
       }
@@ -239,7 +237,7 @@ const EditorScreen = ({ route, navigation }) => {
       setIsLoading(false);
       if (error.message !== 'User did not share') {
         Alert.alert(
-          '错误', 
+          'Error', 
           `生成图片失败:\n${error.message}\n\n${error.stack || ''}`
         );
       }
@@ -286,10 +284,19 @@ const EditorScreen = ({ route, navigation }) => {
               setContentHeight(height);
             }}
           >
-            <Markdown
-              markdownit={
-                MarkdownIt({typographer: true}).disable([ 'link', 'image' ]) 
-              }
+            <Markdown 
+              style={markdownStyles}
+              rules={{
+                fence: (node, children, parent, styles) => {
+                  return (
+                    <View key={node.key} style={styles.fence}>
+                      <Text style={styles.fence_code}>
+                        {node.content}
+                      </Text>
+                    </View>
+                  );
+                }
+              }}
             >
               {content}
             </Markdown>
@@ -347,6 +354,86 @@ const EditorScreen = ({ route, navigation }) => {
   );
 };
 
+
+const markdownStyles = {
+    body: {
+      color: '#333',
+      fontSize: 16,
+      lineHeight: 24,
+    },
+    heading1: {
+      fontSize: 28,
+      marginBottom: 16,
+      fontWeight: 'bold',
+      color: '#000',
+      lineHeight: 36,
+      marginTop: 32,
+    },
+    heading2: {
+      fontSize: 24,
+      marginBottom: 14,
+      fontWeight: 'bold',
+      color: '#222',
+      lineHeight: 32,
+      marginTop: 28,
+    },
+    heading3: {
+      fontSize: 20,
+      marginBottom: 12,
+      fontWeight: 'bold',
+      color: '#333',
+      lineHeight: 28,
+      marginTop: 24,
+    },
+    paragraph: {
+      marginBottom: 12,
+      lineHeight: 24,
+      fontSize: 16,
+      letterSpacing: 0.5,
+      marginVertical: 8,
+    },
+    link: {
+      color: '#2196F3',
+    },
+    list_item: {
+      marginBottom: 8,
+      lineHeight: 24,
+      letterSpacing: 0.5,
+    },
+    blockquote: {
+      backgroundColor: '#f5f5f5',
+      padding: 10,
+      marginBottom: 12,
+      borderLeftWidth: 4,
+      borderLeftColor: '#2196F3',
+      marginVertical: 16,
+      paddingVertical: 12,
+    },
+    code_inline: {
+      fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
+      backgroundColor: '#f5f5f5',
+      paddingHorizontal: 4,
+      paddingVertical: 2,
+    },
+    code_block: {
+      fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
+      backgroundColor: '#f5f5f5',
+      padding: 10,
+      borderRadius: 4,
+    },
+    fence: {
+      fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
+      backgroundColor: '#f5f5f5',
+      padding: 10,
+      borderRadius: 4,
+      marginVertical: 8,
+    },
+    fence_code: {
+      fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
+      color: '#333',
+    }
+  };
+  
 const styles = StyleSheet.create({
   container: {
     flex: 1,
