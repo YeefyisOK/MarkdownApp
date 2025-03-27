@@ -1,3 +1,87 @@
+# MDCanvas
+
+[English](README.md) | [中文](README.zh.md)
+
+<p align="center">
+  <img src="./assets/Icon.png" width="120" height="120" />
+</p>
+
+MDCanvas is a powerful Markdown to Image converter for iOS. Convert your Markdown notes into beautiful, shareable images with just a few taps.
+
+<p align="center">
+  <a href="https://apps.apple.com/cn/app/%E7%A0%81%E5%BD%93%E7%AC%94%E8%AE%B0-markdown%E7%A5%9E%E5%99%A8/id6741430391">
+    <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" style="width: 250px;">
+  </a>
+</p>
+
+## 📱 Screenshots
+
+<p align="center">
+  <img src="./assets/screenshot1.png" width="300" />
+  <img src="./assets/screenshot2.png" width="300" />
+  <img src="./assets/screenshot3.png" width="300" />
+</p>
+
+## ✨ Features
+
+- 📝 Clean and intuitive Markdown editor
+- 👀 Real-time preview with beautiful formatting
+- 🖼 Export notes as high-quality images
+- 🎨 Support for custom styling and themes
+- 📱 Full iPad optimization with split-screen support
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js >= 14
+- Xcode >= 14
+- CocoaPods
+- Ruby >= 2.7
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/MDCanvas.git
+cd MDCanvas
+```
+
+2. Install JavaScript dependencies:
+```bash
+yarn install
+# OR
+npm install
+```
+
+3. Install iOS dependencies:
+```bash
+cd ios
+bundle install
+bundle exec pod install
+cd ..
+```
+
+### Running the App
+
+1. Start the Metro bundler:
+```bash
+yarn start
+# OR
+npm start
+```
+
+2. Run the iOS app:
+```bash
+yarn ios
+# OR
+npm run ios
+```
+
+## 🔧 Development
+
+### File Structure
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
@@ -66,7 +150,7 @@ This is one way to run your app — you can also build it directly from Android 
 
 Now that you have successfully run the app, let's make changes!
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
 
 When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
 
@@ -86,12 +170,21 @@ You've successfully run and modified your React Native App. :partying_face:
 
 If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
 
-# Learn More
+## 📱 Follow Us
 
-To learn more about React Native, take a look at the following resources:
+Follow us on Xiaohongshu (rednote) for tips and updates:
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+<p align="center">
+  <img src="assets/xhs.JPG" width="200" alt="Xiaohongshu QR Code" />
+</p>
+
+
+## 💝 Support the Project
+
+If you find MDCanvas helpful, you can support the development by:
+
+<p align="center">
+  <img src="./assets/sponsor.png" width="200" alt="Sponsor QR Code" />
+</p>
+
+Your support helps maintain and improve MDCanvas. Thank you! 🙏
